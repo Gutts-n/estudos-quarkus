@@ -35,14 +35,15 @@ public class RestaurantResource implements RestaurantResourceInterface {
 
     @Inject
     RestaurantMappper mapper;
-
+    @GET
     public List<ListRestaurantDTO> listAll() {
         return mapper.toRestaurantsDTO(Restaurant.listAll());
     }
 
-    // TODO TENTAR FAZER AQUELA PARADINHAS DAS INTERFACES PARA UMA DE MÉTRICAS OUTRA PARA DOCUMENTAÇÃO DO ENDPOINT E QUE AS DUAS SE ESTENDAM E TALS
+    // TODO TENTAR FAZER AQUELA PARADINHAS DAS INTERFACES PARA UMA DE MÉTRICAS OUTRA PARA DOCUMENTAÇÃO DO ENDPOINT E QUE AS DUAS SE ESTENDAM
 
     @Transactional
+    @POST
     public Response create(AddRestaurantDTO dto, Response response) {
         var entity = mapper.toRestaurant(dto);
 
@@ -51,12 +52,14 @@ public class RestaurantResource implements RestaurantResourceInterface {
     }
 
     @Transactional
+    @PUT
     public void update(Long id, UpdateRestaurantDTO dto) {
         var restaurant = (Restaurant) Restaurant.findByIdOptional(id).orElseThrow(() -> {throw new NotFoundException();});
         var dtoToEntity = mapper.toRestaurant(dto, restaurant);
         dtoToEntity.persist();
     }
 
+    @DELETE
     public void delete(Long id) {
         if(!Restaurant.deleteById(id)) throw new NotFoundException();
     }

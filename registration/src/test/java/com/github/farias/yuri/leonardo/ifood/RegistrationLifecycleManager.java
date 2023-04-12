@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class RegistrationLifecycleManager implements QuarkusTestResourceLifecycleManager {
 
-    public static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:14.4");
+    public static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres");
 
     @Override
     public Map<String, String> start() {
@@ -18,7 +18,6 @@ public class RegistrationLifecycleManager implements QuarkusTestResourceLifecycl
         properties.put("quarkus.datasource.url", POSTGRES.getJdbcUrl());
         properties.put("quarkus.datasource.username", POSTGRES.getUsername());
         properties.put("quarkus.datasource.password", POSTGRES.getPassword());
-        properties.put("docker.host", "unix:///var/run/docker.sock");
 
         return properties;
     }

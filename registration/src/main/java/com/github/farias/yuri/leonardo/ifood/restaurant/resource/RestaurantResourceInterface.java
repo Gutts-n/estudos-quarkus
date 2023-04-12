@@ -21,22 +21,18 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface RestaurantResourceInterface {
-    @GET
     @Tag(name = "Restaurant")
     List<ListRestaurantDTO> listAll();
 
-    @POST
     @Tag(name = "Restaurant")
     @APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
     @APIResponse(responseCode = "201", description = "When the restaurant's created")
     Response create(@Valid @RequestBody AddRestaurantDTO dto, Response response);
 
-    @PUT
     @Path("{id}")
     @Tag(name = "Restaurant")
     void update(@PathParam("id") Long id, UpdateRestaurantDTO dto);
 
-    @DELETE
     @Path("{id}")
     @Transactional
     @Tag(name = "Restaurant")
